@@ -1,0 +1,40 @@
+name: couples_app_flutter
+description: A new Flutter project for the premium dark-themed Couples App.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State Management & Navigation
+  provider: ^6.1.1
+  go_router: ^12.1.1
+
+  # Firebase Core & Cloud Services
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.15.3
+  cloud_firestore: ^4.13.6
+  
+  # UI & Design
+  cupertino_icons: ^1.0.2
+  font_awesome_flutter: ^10.6.0
+  google_fonts: ^6.1.0
+
+  # Location & Device APIs
+  geolocator: ^10.1.0
+  google_maps_flutter: ^2.5.0
+  battery_plus: ^5.0.3
+  shared_preferences: ^2.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
