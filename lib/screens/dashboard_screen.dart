@@ -90,15 +90,15 @@ class DashboardScreen extends StatelessWidget {
                 // GRID CARDS
                 Row(
                   children: [
-                    Expanded(child: _buildDashCard("Konum", Icons.map, const Color(0xFFb395ff), () => context.go('/map'))),
+                    Expanded(child: _buildDashCard("Konum", Icons.location_on, const Color(0xFFb395ff), () => context.go('/map'))),
                     const SizedBox(width: 15),
-                    Expanded(child: _buildDashCard("Galeri", Icons.photo_album, const Color(0xFFf9d689), () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Galeri yakında!"))))),
+                    Expanded(child: _buildDashCard("Galeri", Icons.photo_library, const Color(0xFFf9d689), () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Galeri yakında!"))))),
                   ]
                 ),
                 const SizedBox(height: 15),
                 Row(
                   children: [
-                    Expanded(child: _buildDashCard("Görevler", Icons.check_circle, const Color(0xFF4cd137), () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Görevler yakında!"))))),
+                    Expanded(child: _buildDashCard("Görevler", Icons.task_alt, const Color(0xFF4cd137), () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Görevler yakında!"))))),
                     const SizedBox(width: 15),
                     Expanded(child: _buildDashCard("Hayvanım", Icons.pets, const Color(0xFFFF4B72), () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Hayvanım yakında!"))))),
                   ]

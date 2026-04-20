@@ -27,7 +27,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
-                  Icons.favorite,
+                  Icons.favorite_border,
                   size: 80,
                   color: AppColors.primary,
                 ),

@@ -113,10 +113,10 @@ class _MainTabsState extends State<MainTabs> {
             setState(() { _currentIndex = index; });
           },
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.location_on), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.map), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.message), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: ''),
           ],
         ),
       ),
@@ -124,7 +124,7 @@ class _MainTabsState extends State<MainTabs> {
         onPressed: () {},
         backgroundColor: AppColors.primary,
         elevation: 10,
-        child: const Icon(Icons.favorite, color: Colors.white, size: 28),
+        child: const Icon(Icons.add, color: Colors.white, size: 28),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );

@@ -21,12 +21,15 @@ class _PairingScreenState extends State<PairingScreen> {
   }
 
   Future<void> _connectWithPartner() async {
-    if (_codeController.text.isEmpty) return;
-
     setState(() => _isLoading = true);
     try {
-      final authService = Provider.of<AuthService>(context, listen: false);
-      await authService.connectWithPartner(_codeController.text);
+      if (_codeController.text.isEmpty) {
+        // Kod boşsa uyarı göster ama yine de devam et
+        await _showWarningDialog();
+      } else {
+        final authService = Provider.of<AuthService>(context, listen: false);
+        await authService.connectWithPartner(_codeController.text);
+      }
       if (mounted) {
         context.go('/dashboard');
       }
@@ -41,6 +44,46 @@ class _PairingScreenState extends State<PairingScreen> {
         setState(() => _isLoading = false);
       }
     }
+  }
+
+  Future<void> _showWarningDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColors.surface,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Row(
+            children: [
+              Icon(Icons.warning_amber_rounded, color: AppColors.primary, size: 28),
+              const SizedBox(width: 10),
+              const Text(
+                'Uyarı',
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          content: const Text(
+            'Eşleşme kodu girmediniz. Test modu ile devam edilecek.',
+            style: TextStyle(color: AppColors.textMuted),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Tamam',
+                style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -61,7 +104,7 @@ class _PairingScreenState extends State<PairingScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
-                  Icons.people,
+                  Icons.group_add,
                   size: 80,
                   color: AppColors.primary,
                 ),
