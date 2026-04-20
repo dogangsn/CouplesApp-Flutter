@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'theme/colors.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/pairing_screen.dart';
 import 'screens/dashboard_screen.dart';
 import 'screens/map_screen.dart';
+import 'firebase_options.dart';
 import 'services/auth_service.dart';
 import 'services/location_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Not: Firebase.initializeApp() burada çağrılmalı, ancak SDK kurulu olmadığı için simüle ediliyor.
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   
   runApp(
     MultiProvider(
