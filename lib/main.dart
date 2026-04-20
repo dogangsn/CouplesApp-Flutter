@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
 import 'theme/colors.dart';
 import 'screens/onboarding_screen.dart';
@@ -31,7 +32,28 @@ class CouplesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final GoRouter _router = GoRouter(
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => const OnboardingScreen(),
+        ),
+        GoRoute(
+          path: '/pairing',
+          builder: (context, state) => const PairingScreen(),
+        ),
+        GoRoute(
+          path: '/dashboard',
+          builder: (context, state) => const MainTabs(),
+        ),
+        GoRoute(
+          path: '/map',
+          builder: (context, state) => const MapScreen(),
+        ),
+      ],
+    );
+
+    return MaterialApp.router(
       title: 'Couples App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -51,12 +73,7 @@ class CouplesApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const OnboardingScreen(),
-        '/pairing': (context) => const PairingScreen(),
-        '/dashboard': (context) => const MainTabs(),
-      },
+      routerConfig: _router,
     );
   }
 }

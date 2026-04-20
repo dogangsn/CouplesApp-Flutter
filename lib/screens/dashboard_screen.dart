@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../theme/colors.dart';
+import '../services/auth_service.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Consumer<AuthService>(
+      builder: (context, authService, child) {
+        final daysTogether = _calculateDaysTogether(authService.relationshipStartDate);
+
+        return Scaffold(
       appBar: AppBar(
         title: const Text("CouplesApp", style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
@@ -33,10 +40,13 @@ class DashboardScreen extends StatelessWidget {
               ),
               child: const Column(
                 children: [
-                   Text("99", style: TextStyle(fontSize: 60, fontWeight: FontWeight.w900, color: AppColors.primary, height: 1.0)),
-                   Text("Günler", style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600)),
-                   SizedBox(height: 8),
-                   Text("Birlikteliğinizden beri", style: TextStyle(color: AppColors.textMuted, fontSize: 13)),
+                       Text(
+                         daysTogether.toString(),
+                         style: const TextStyle(fontSize: 60, fontWeight: FontWeight.w900, color: AppColors.primary, height: 1.0),
+                       ),
+                       const Text("Günler", style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600)),
+                       const SizedBox(height: 8),
+                       const Text("Birlikteliğinizden beri", style: TextStyle(color: AppColors.textMuted, fontSize: 13)),
                 ],
               ),
             ),
@@ -45,47 +55,51 @@ class DashboardScreen extends StatelessWidget {
             // GRID CARDS
             Row(
               children: [
-                Expanded(child: _buildDashCard("Konum", Icons.map, const Color(0xFFb395ff))),
+                Expanded(child: _buildDashCard("Konum", Icons.map, const Color(0xFFb395ff), () => context.go('/map'))),
                 const SizedBox(width: 15),
-                Expanded(child: _buildDashCard("Galeri", Icons.photo_album, const Color(0xFFf9d689))),
+                Expanded(child: _buildDashCard("Galeri", Icons.photo_album, const Color(0xFFf9d689), () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Galeri yakında!"))))),
               ]
             ),
             const SizedBox(height: 15),
             Row(
               children: [
-                Expanded(child: _buildDashCard("Görevler", Icons.check_circle, const Color(0xFF4cd137))),
+                Expanded(child: _buildDashCard("Görevler", Icons.check_circle, const Color(0xFF4cd137), () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Görevler yakında!"))))),
                 const SizedBox(width: 15),
-                Expanded(child: _buildDashCard("Hayvanım", Icons.pets, const Color(0xFFFF4B72))),
+                Expanded(child: _buildDashCard("Hayvanım", Icons.pets, const Color(0xFFFF4B72), () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Hayvanım yakında!"))))),
               ]
             )
           ],
         ),
       ),
     );
-  }
+      },
+    );
 
-  Widget _buildDashCard(String title, IconData icon, Color accent) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-           Container(
-             padding: const EdgeInsets.all(10),
-             decoration: BoxDecoration(
-               color: accent.withOpacity(0.15),
-               shape: BoxShape.circle,
+  Widget _buildDashCard(String title, IconData icon, Color accent, VoidCallback? onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: AppColors.surfaceLight,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+             Container(
+               padding: const EdgeInsets.all(10),
+               decoration: BoxDecoration(
+                 color: accent.withOpacity(0.15),
+                 shape: BoxShape.circle,
+               ),
+               child: Icon(icon, color: accent, size: 28),
              ),
-             child: Icon(icon, color: accent, size: 28),
-           ),
-           const SizedBox(height: 15),
-           Text(title, style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w600)),
-        ],
-      )
+             const SizedBox(height: 15),
+             Text(title, style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w600)),
+          ],
+        )
+      ),
     );
   }
 }

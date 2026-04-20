@@ -9,6 +9,7 @@ class AuthService with ChangeNotifier {
   Map<String, dynamic>? currentUserProfile;
   String? partnerUid;
   String? get myUid => _auth.currentUser?.uid;
+  DateTime? relationshipStartDate;
 
   AuthService();
 
@@ -20,9 +21,11 @@ class AuthService with ChangeNotifier {
     await _firestore.collection('Users').doc(newUid).set({
       'profile': profileData,
       'createdAt': FieldValue.serverTimestamp(),
+      'relationshipStartDate': FieldValue.serverTimestamp(), // İlk giriş tarihi
     });
 
     currentUserProfile = profileData;
+    relationshipStartDate = DateTime.now(); // Yerel olarak da tut
     notifyListeners();
   }
 
